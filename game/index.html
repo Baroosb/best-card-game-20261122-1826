@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Emberfall Duel — a card duel against the Warden</title>
+<link rel="stylesheet" href="./css/table.css">
+</head>
+<body>
+<div id="app">
+
+  <!-- ============ TITLE SCREEN ============ -->
+  <section id="screen-title" class="screen">
+    <div class="title-embers" aria-hidden="true"></div>
+    <h1 class="game-logo">EMBERFALL</h1>
+    <p class="game-sub">D U E L &nbsp;·&nbsp; outwit the Warden, one clash at a time</p>
+    <div class="title-cards" aria-hidden="true">
+      <div class="mini-card suit-ember"><span class="mini-val">9</span><span class="mini-glyph"></span></div>
+      <div class="mini-card suit-stone"><span class="mini-val">10</span><span class="mini-glyph"></span></div>
+      <div class="mini-card suit-tide"><span class="mini-val">7</span><span class="mini-glyph"></span></div>
+    </div>
+    <button id="btn-start" class="big-btn">Enter the Duel</button>
+    <button id="btn-help" class="ghost-btn">How to Play</button>
+    <div class="ring-strip" aria-hidden="true">
+      <span class="ring-item suit-ember-txt">EMBER burns THORN</span> ·
+      <span class="ring-item suit-thorn-txt">THORN pierces TIDE</span> ·
+      <span class="ring-item suit-tide-txt">TIDE douses EMBER</span> ·
+      <span class="ring-item suit-stone-txt">STONE answers to none</span>
+    </div>
+    <p class="title-foot">First to lose all 20 Life falls · Keys 1–5 play a card · H help · M sound</p>
+  </section>
+
+  <!-- ============ DUEL TABLE ============ -->
+  <section id="screen-table" class="screen" hidden>
+    <header class="duelist-bar warden-bar">
+      <div class="duelist-id">
+        <div class="avatar avatar-warden">W</div>
+        <div>
+          <div class="duelist-name">THE WARDEN</div>
+          <div id="warden-tell" class="tell">The Warden shuffles, watching you.</div>
+        </div>
+      </div>
+      <div id="warden-hand" class="hand hand-backs" aria-label="The Warden's hand"></div>
+      <div class="life-box">
+        <div class="life-num"><span id="warden-life-text">20</span><small> LIFE</small></div>
+        <div class="life-track"><div id="warden-life-bar" class="life-fill warden-fill"></div></div>
+      </div>
+    </header>
+
+    <main class="table-mid">
+      <div class="mid-side">
+        <div id="round-label" class="round-label">CLASH 1</div>
+        <div id="deck-count" class="deck-count">Deck 34</div>
+      </div>
+      <div class="clash-zone">
+        <div id="clash-warden" class="clash-slot"></div>
+        <div id="vs-badge" class="vs-badge">VS</div>
+        <div id="clash-player" class="clash-slot"></div>
+      </div>
+      <div id="clash-banner" class="clash-banner" aria-live="polite"></div>
+      <div class="mid-side mid-side-right">
+        <button id="btn-mute" class="icon-btn" title="Toggle sound (M)">♪</button>
+        <button id="btn-help2" class="icon-btn" title="How to play (H)">?</button>
+      </div>
+    </main>
+
+    <footer class="duelist-bar player-bar">
+      <div class="life-box">
+        <div class="life-num"><span id="player-life-text">20</span><small> LIFE</small></div>
+        <div class="life-track"><div id="player-life-bar" class="life-fill player-fill"></div></div>
+      </div>
+      <div id="player-hand" class="hand hand-cards" aria-label="Your hand"></div>
+      <div class="duelist-id duelist-id-right">
+        <div>
+          <div class="duelist-name">YOU</div>
+          <div id="player-hint" class="tell">Pick a card to clash.</div>
+        </div>
+        <div class="avatar avatar-player">Y</div>
+      </div>
+    </footer>
+  </section>
+
+  <!-- ============ END SCREEN ============ -->
+  <section id="screen-end" class="screen" hidden>
+    <h2 id="end-title" class="end-title">VICTORY</h2>
+    <p id="end-detail" class="end-detail">The Warden falls.</p>
+    <div id="end-stats" class="end-stats"></div>
+    <button id="btn-again" class="big-btn">Duel Again</button>
+    <p class="title-foot">Press R to rematch</p>
+  </section>
+
+  <!-- ============ HELP OVERLAY ============ -->
+  <div id="help-overlay" class="overlay" hidden>
+    <div class="help-card">
+      <h2>How to Play</h2>
+      <p><strong>The duel.</strong> You and the Warden each hold 20 Life and a hand of five cards. Every clash, pick one of your cards; the Warden picks one of his at the same moment. Both are revealed together.</p>
+      <p><strong>Might.</strong> A card's Might is its value, plus <strong>+2</strong> if its suit beats the other card's suit. The higher Might wins the clash and the loser takes damage equal to the difference. A dead tie scorches both duelists for 1.</p>
+      <p><strong>The ring of suits.</strong> <span class="suit-ember-txt">EMBER</span> burns <span class="suit-thorn-txt">THORN</span>; THORN pierces <span class="suit-tide-txt">TIDE</span>; TIDE douses EMBER. <span class="suit-stone-txt">STONE</span> stands outside the ring — it never gains or yields the +2, but its cards run 2–10 instead of 1–9.</p>
+      <p><strong>Sigil cards.</strong> <strong>AEGIS</strong> (value 2) halves any damage you take that clash. <strong>SURGE</strong> (value 6) doubles any damage you deal that clash. Sigils have no suit, so they never take the ring bonus.</p>
+      <p><strong>Reading the Warden.</strong> He studies you: he counts the suits you play most and loads counters, guards his high cards while he is ahead, and spends an Aegis when he fears a heavy blow. His mood shows above his hand — bait his best cards out on clashes you can afford to lose.</p>
+      <p><strong>Controls.</strong> Click a card (or press 1–5) to clash with it. H opens this help, M toggles sound, R starts a rematch from the end screen.</p>
+      <button id="btn-close-help" class="big-btn">Back to the Table</button>
+    </div>
+  </div>
+
+</div>
+<script type="module" src="./src/main.js"></script>
+</body>
+</html>
